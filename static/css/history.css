@@ -1,0 +1,139 @@
+body {
+    background-color: white;
+    font-family: Raleway, sans-serif;
+  }
+  
+  .navigation ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .navigation li {
+    font-weight: 100;
+    letter-spacing: normal;
+    padding: 20px;
+  }
+  
+  .navigation  li.logo {
+    color: black;
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: 5px;
+  
+  }
+  
+  .navigation li:hover:not(.logo){
+    text-shadow: 3px 3px 5px black;
+    letter-spacing: 2px;
+  }
+  
+  #banner {
+    background-image: url(../img/map.jpg);
+    height: 800px;
+    width: 100%;
+    background-position: bottom center;
+    background-size: cover;
+  }
+  
+  #banner .content h1 {
+    border: 1px dashed white;
+    position: relative;
+    top: 400px;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    color: #0d6efd;
+    font-size: 56px;
+  }
+  
+  #main {
+    margin: 0 auto;
+    width: 600px;
+    text-align: center;
+    padding: 40px;
+    height: 1000px;
+    overflow-y: scroll;
+  }
+  
+  
+  h2 {
+    color: #0d6efd;
+    font-size: 32px;
+    font-weight: bolder;
+    padding: 20px 10px;
+  }
+  
+  p {
+    color:#010101;
+    font-size: 18px;
+    line-height: 48px;
+    margin-top: 60px;
+    padding: 10px 20px;
+  
+  }
+  
+  .pull-quote {
+    margin: 0 auto;
+    width: 400px;
+  }
+  
+  .pull-quote p{
+    border: 1px dotted #0f9799;
+    font-size: 21px;
+    font-weight: bolder;
+    line-height: 48px;
+    padding: 20px 10px;
+    margin: 0 10px;
+    text-align: center;
+  }
+  
+  .share {
+    border: 1px solid lightgray;
+    padding: 40px 0;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .share a {
+    background-color: #0d6efd;
+    border: 1px solid #0d6efd;
+    border-radius: 20px;
+    color: white;
+    display: inline-block;
+    margin: 10px;
+    padding: 14px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+    padding: 14px;
+    text-decoration: none;
+  
+  }
+  
+  .share a:hover {
+  background-color: #cccccc;
+    color: #005a5c;
+  }
+
+  .icons-footer {
+    width: 1500px;
+    height: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+
+  .ico {
+    display: inline-block;
+  }
+
+  use {
+    width: 10px;
+    height: 10px;
+  }
+
+
+  svg {
+    vertical-align: middle
+}

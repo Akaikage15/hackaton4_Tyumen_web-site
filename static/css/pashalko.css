@@ -1,0 +1,93 @@
+.share {
+    border: 1px solid lightgray;
+    padding: 40px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .share a {
+    background-color: #0d6efd;
+    border: 1px solid #0d6efd;
+    border-radius: 20px;
+    color: white;
+    display: inline-block;
+    margin: 10px;
+    padding: 14px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+    padding: 14px;
+    text-decoration: none;
+
+  }
+
+  .share a:hover {
+  background-color: #cccccc;
+    color: #005a5c;
+  }
+
+
+  .icons-footer {
+    width: 1500px;
+    height: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+
+  .ico {
+    display: inline-block;
+  }
+
+
+  svg {
+    vertical-align: middle
+}
+
+
+h1 {
+
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+
+p {
+    margin-left: 100px;
+    text-align: left;
+}
+
+
+
+.friren {
+    background-image: url(../img/pashalko.jpg);
+    width: 100%;
+    height: 1000px;
+    background-position: bottom center;
+    background-size: cover;
+}
+
+
+.img0 {
+    display: flex;
+    justify-content: center;
+}
+
+
+.mem {
+    background-image: url(../img/!mem!.jpg)
+    width: 100%;
+    height: 700px;
+    background-position: bottom center;
+    background-size: cover;
+}
+
+
+.mem h1 {
+    z-index: 1;
+}
+
+
+.mem img {
+    z-index: 10;
+}

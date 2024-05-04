@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menu.css' %}">
+    <title>Соревнования</title>
+</head>
+<body>
+{% include 'menu.html' %}
+<ul>
+  {% for competition in competitions %}
+  <li>{{ competition.name }} - <a href="{% url 'competition_results' %}?competition_name={{ competition.name }}">Итоги</a>:<a href="{% url 'edit_competition' %}?competition_name={{ competition.name }}">Выступления</a></li>
+  {% endfor %}
+</ul>
+</body>
+</html>
