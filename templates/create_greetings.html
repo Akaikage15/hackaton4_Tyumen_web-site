@@ -2,13 +2,13 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Create Quests</title>
+    <title>Create Greetings</title>
 </head>
 <body>
 <form method="post" action="#">
     {{ form.csrf_token }}
     {{ form.name }}
-    {{ form.date }}
+    {{ form.text }}
     <input type="submit" value="Create">
 </form>
 </body>

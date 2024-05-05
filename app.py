@@ -19,8 +19,9 @@ db.init_app(app)
 migrate = Migrate(app, db)
 #login_manager = LoginManager(app)
 
-@app.route('/home')
+
 @app.route('/')
+@app.route('/home')
 def home():
     return render_template('home.html')
 
@@ -52,6 +53,7 @@ def quests_get_id(id):
     result = {'dete': quests.date, 'id': quests.id, 'name': quests.name}
 
     return json.dumps(result), 200
+
 
 @app.route('/gastronomy/create', methods=['GET', 'POST'])
 def gastronomy_create():
@@ -93,6 +95,26 @@ def create_quests():
         db.session.flush()
 
         id = new_quest.id
+
+        return json.dumps({'id': id}), 200
+
+
+@app.route('/greetings/create', methods=['GET', 'POST'])
+def create_greetings():
+    if request.method == 'GET':
+        form = CreateGreetings()
+        return render_template('create_greetings.html', form=form)
+    elif request.method == 'POST':
+        name = request.form.get('name')
+        text = request.form.get('text')
+
+        new_greetings = Greetings(name=name, date=text)
+
+        db.session.add(new_greetings)
+        db.session.commit()
+        db.session.flush()
+
+        id = new_greetings.id
 
         return json.dumps({'id': id}), 200
 
