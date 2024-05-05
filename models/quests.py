@@ -9,4 +9,4 @@ class Quests(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     date = db.Column(db.String(50))
-
+    text = db.Column(db.String(1000))

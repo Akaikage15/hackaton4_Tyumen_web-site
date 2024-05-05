@@ -4,8 +4,9 @@ import hashlib
 import os
 
 from flask import Flask, request, render_template, redirect, url_for
-#from flask_login import LoginManager, login_user, login_required, current_user
+from flask_login import LoginManager, login_user, login_required, current_user
 from flask_migrate import Migrate
+from random import randint
 
 from models import *
 from forms import *
@@ -17,12 +18,73 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 app.config["SECRET_KEY"] = "I LOVE PYTHON"
 db.init_app(app)
 migrate = Migrate(app, db)
-#login_manager = LoginManager(app)
+login_manager = LoginManager(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(username=username).first()
+        pass_hash = hashlib.sha256(password.encode()).hexdigest()
+
+        if not user:
+            new_user = User(username=username, password=pass_hash)
+
+            new_user.authenticated = True
+            db.session.add(new_user)
+            db.session.commit()
+            db.session.flush()
+
+            login_user(new_user, remember=True)
+            return redirect('/profile')
+
+    form = AuthForm()
+    name = 'Регистрация'
+
+    return render_template('login1.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(username=username).first()
+        pass_hash = hashlib.sha256(password.encode()).hexdigest()
+
+        if user and pass_hash == user.password:
+            user.authenticated = True
+            db.session.add(user)
+            db.session.commit()
+
+            login_user(user, remember=True)
+            return redirect('/profile')
+
+    form = AuthForm()
+    name = 'Вход'
+
+    return render_template('login2.html')
 
 
 @app.route('/')
 @app.route('/home')
 def home():
+
+    # def random_greetings():
+    #     rows = db.session.query(Greetings).count()
+    #     num = randint(1, rows)
+    #     random_get = db.session.query(Greetings).get(num)
+    #     return random_get
+
     return render_template('home.html')
 
 
@@ -50,12 +112,12 @@ def quests():
 def quests_get_id(id):
 
     quests = db.get_or_404(Quests, id)
-    result = {'dete': quests.date, 'id': quests.id, 'name': quests.name}
+    result = {'date': quests.date, 'id': quests.id, 'name': quests.name, 'text': quests.text}
 
-    return json.dumps(result), 200
+    return render_template('quests_get.html', result=result), 200
 
 
-@app.route('/gastronomy/create', methods=['GET', 'POST'])
+@app.route('/create/gastronomy', methods=['GET', 'POST'])
 def gastronomy_create():
     if request.method == 'GET':
         form = CreateGastronomy()
@@ -79,7 +141,7 @@ def gastronomy_create():
         return json.dumps({'id': id}), 200
 
 
-@app.route('/quests/create', methods=['GET', 'POST'])
+@app.route('/create/quests', methods=['GET', 'POST'])
 def create_quests():
     if request.method == 'GET':
         form = CreateQuests()
@@ -99,7 +161,7 @@ def create_quests():
         return json.dumps({'id': id}), 200
 
 
-@app.route('/greetings/create', methods=['GET', 'POST'])
+@app.route('/create/greetings', methods=['GET', 'POST'])
 def create_greetings():
     if request.method == 'GET':
         form = CreateGreetings()
@@ -117,6 +179,11 @@ def create_greetings():
         id = new_greetings.id
 
         return json.dumps({'id': id}), 200
+
+
+@app.route('/create')
+def create():
+    return render_template('create.html')
 
 
 @app.route('/history')
@@ -153,6 +220,28 @@ def gastronomy():
 @app.route('/pashalko')
 def pashalko():
     return render_template('pashalko.html')
+
+
+@app.route('/profile')
+@login_required
+def profile():
+
+    user = current_user
+    event_data = False
+
+    if user.quests is not None:
+        query = User.query.join(Quests, Quests.id == User.event).all()
+        print(query.all().__dict__)
+        event_data = True
+
+    else:
+        query = db.session.query(User).get(user.username)
+
+    return_dict = query.__dict__
+    return_dict.pop('_sa_instance_state')
+    return_dict['event_data'] = event_data
+
+    return return_dict
 
 
 if __name__ == "__main__":
